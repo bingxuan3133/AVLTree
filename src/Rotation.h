@@ -3,7 +3,7 @@
 
 #include "AVL.h"
 
-int getHeight(Node *elem);
+int getHeight(Node *parent);
 Node *rightRotate(Node *parent);
 Node *leftRotate(Node *parent);
 Node *doubleRightRotate(Node *parent);
