@@ -1,4 +1,6 @@
 #include "Rotation.h"
+#include "AVL.h"
+#include "AVLInt.h"
 #include <stdio.h>
 
 int getHeight(Node *parent) {

@@ -7,11 +7,10 @@ struct Node {
 	int balance;
 	Node *leftChild;
 	Node *rightChild;
-	int data;
 };
 
-Node *avlAdd(Node *root, Node *noteToAdd);
-Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove);
+Node *avlAdd(Node *root, Node *noteToAdd, int (*compare)(void *, void *));
+Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove, int (*compare)(void *, void *));
 Node *avlGetReplacer(Node **ptrToRoot);
 
 #endif // AVL_H

@@ -1,5 +1,6 @@
 #include "Rotation.h"
 #include "AVL.h"
+#include "AVLInt.h"
 #include <stdio.h>
 
 /*
@@ -11,55 +12,66 @@
  * return:
  *  *root       root node of the new BST
  */
-Node *avlAdd(Node *root, Node *nodeToAdd) {
-	int balanceBefore;
-
+Node *avlAdd(Node *root, Node *nodeToAdd, int (*compare)(void *, void *)) {
+  int compareResult, balanceBefore;
+  
+  if(nodeToAdd == NULL) {
+    return root;
+  }
+  
 	if(root == NULL) { // Reach NULL
 		root = nodeToAdd;
 		root->balance = 0;
 	} else { // Comparison
-		if(nodeToAdd->data < root->data) { // Go to Left
+    
+    compareResult = compare(root, nodeToAdd);
+    
+    if(compareResult == 0) { // Equal
+			printf("error\n"); // Throw exception
+    
+		// else if(nodeToAdd->data < root->data) {
+    }  else if(compareResult == 1) { // Go to Left
 
 			if(root->leftChild == NULL) { // leftChild is empty
-				root->leftChild = avlAdd(root->leftChild, nodeToAdd);
+				root->leftChild = avlAdd(root->leftChild, nodeToAdd, compare);
 				root->balance--;
 			} else { // leftChild is not empty
 				balanceBefore = root->leftChild->balance;
-				root->leftChild = avlAdd(root->leftChild, nodeToAdd);
+				root->leftChild = avlAdd(root->leftChild, nodeToAdd, compare);
 				if(root->leftChild->balance - balanceBefore != 0 && root->leftChild->balance != 0) // Does the depth of left sub tree change?
 					root->balance--;
 			}
 			
-		} else if(nodeToAdd->data > root->data) { // Go to Right
+		// else if(nodeToAdd->data > root->data) {
+    } else if(compareResult == -1) { // Go to Right
 
 			if(root->rightChild == NULL) { // rightChild is empty
-				root->rightChild = avlAdd(root->rightChild, nodeToAdd);
+				root->rightChild = avlAdd(root->rightChild, nodeToAdd, compare);
 				root->balance++;
 			} else { // rightChild is not empty
 				balanceBefore = root->rightChild->balance;
-				root->rightChild = avlAdd(root->rightChild, nodeToAdd);
+				root->rightChild = avlAdd(root->rightChild, nodeToAdd, compare);
 				if(root->rightChild->balance - balanceBefore != 0 && root->rightChild->balance != 0) // Does the depth of right sub tree change?
 					root->balance++;
 			}
-			
-		} else { // Equal
-			printf("error\n"); // Throw exception
+      
 		}
+    
 	}
 	
 	// Decide if should do rotation
 	if(root->balance == 2) {
 		if(root->rightChild->balance >= 0 ) {
-			root = leftRotate(root);
+			root = leftRotate((Node *)root);
 		} else {
-			root = doubleLeftRotate(root);
+			root = doubleLeftRotate((Node *)root);
 		}
 		
 	} else if(root->balance == -2) {
 		if(root->leftChild->balance <= 0 ) {
-			root = rightRotate(root);
+			root = rightRotate((Node *)root);
 		} else {
-			root = doubleRightRotate(root);
+			root = doubleRightRotate((Node *)root);
 		}
 	}
 
@@ -76,8 +88,8 @@ Node *avlAdd(Node *root, Node *nodeToAdd) {
  *  NULL          nodeToRemove cannot be found in the BST
  *  nodeToRemove  node that has been removed successfully from the BST
  */
-Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
-  int balanceBefore;
+Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove, int (*compare)(void *, void *)) {
+  int compareResult, balanceBefore;
   Node *replacer;
   
 	if(nodeToRemove == NULL) { // Removing a NULL
@@ -88,7 +100,11 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
       return NULL; // nodeToRemove cannot be found in the tree
       
     } else { // *ptrToRoot is not NULL
-      if(nodeToRemove->data == (*ptrToRoot)->data) { // Found nodeToRemove
+    
+      compareResult = compare((*ptrToRoot), nodeToRemove);
+      
+      //if(nodeToRemove->data == (*ptrToRoot)->data) {
+      if(compareResult == 0) { // Found nodeToRemove
       
         if((*ptrToRoot)->leftChild != NULL) { // 1st priority on leftChild
           
@@ -115,10 +131,11 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
           
         }
         
-      } else if(nodeToRemove->data < (*ptrToRoot)->data) { // Go Left
+      // else if(nodeToRemove->data < (*ptrToRoot)->data) {
+      } else if(compareResult == 1) { // Go Left
           if((*ptrToRoot)->leftChild != NULL)
             balanceBefore = (*ptrToRoot)->leftChild->balance;
-          nodeToRemove = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove);
+          nodeToRemove = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove, compare);
           if((*ptrToRoot)->leftChild != NULL) {
             if(balanceBefore != 0 && (*ptrToRoot)->leftChild->balance == 0) // Does the depth of left sub tree change?
               (*ptrToRoot)->balance++;
@@ -128,10 +145,10 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
             }
           }
           
-      } else if(nodeToRemove->data > (*ptrToRoot)->data) { // Go Right
+      } else if(compareResult == -1) { // Go Right
           if((*ptrToRoot)->rightChild != NULL)
             balanceBefore = (*ptrToRoot)->rightChild->balance;
-          nodeToRemove = avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove);
+          nodeToRemove = avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove, compare);
           if((*ptrToRoot)->rightChild != NULL) {
             if(balanceBefore != 0 && (*ptrToRoot)->rightChild->balance == 0) // Does the depth of right sub tree change?
               (*ptrToRoot)->balance--;
@@ -155,16 +172,16 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
   if((*ptrToRoot) != NULL) {
     if((*ptrToRoot)->balance == 2) {
       if((*ptrToRoot)->rightChild->balance >= 0 ) {
-        (*ptrToRoot) = leftRotate((*ptrToRoot));
+        (*ptrToRoot) = leftRotate((Node *)(*ptrToRoot));
       } else {
-        (*ptrToRoot) = doubleLeftRotate((*ptrToRoot));
+        (*ptrToRoot) = doubleLeftRotate((Node *)(*ptrToRoot));
       }
       
     } else if((*ptrToRoot)->balance == -2) {
       if((*ptrToRoot)->leftChild->balance <= 0 ) {
-        (*ptrToRoot) = rightRotate((*ptrToRoot));
+        (*ptrToRoot) = rightRotate((Node *)(*ptrToRoot));
       } else {
-        (*ptrToRoot) = doubleRightRotate((*ptrToRoot));
+        (*ptrToRoot) = doubleRightRotate((Node *)(*ptrToRoot));
       }
     }
   }
@@ -214,16 +231,16 @@ Node *avlGetReplacer(Node **ptrToRoot) {
   if((*ptrToRoot) != NULL) {
     if((*ptrToRoot)->balance == 2) {
       if((*ptrToRoot)->rightChild->balance >= 0 ) {
-        (*ptrToRoot) = leftRotate((*ptrToRoot));
+        (*ptrToRoot) = leftRotate((Node *)(*ptrToRoot));
       } else {
-        (*ptrToRoot) = doubleLeftRotate((*ptrToRoot));
+        (*ptrToRoot) = doubleLeftRotate((Node *)(*ptrToRoot));
       }
       
     } else if((*ptrToRoot)->balance == -2) {
       if((*ptrToRoot)->leftChild->balance <= 0 ) {
-        (*ptrToRoot) = rightRotate((*ptrToRoot));
+        (*ptrToRoot) = rightRotate((Node *)(*ptrToRoot));
       } else {
-        (*ptrToRoot) = doubleRightRotate((*ptrToRoot));
+        (*ptrToRoot) = doubleRightRotate((Node *)(*ptrToRoot));
       }
     }
   }

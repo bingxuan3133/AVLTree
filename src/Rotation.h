@@ -2,6 +2,7 @@
 #define Rotation_H
 
 #include "AVL.h"
+#include "AVLInt.h"
 
 int getHeight(Node *parent);
 Node *rightRotate(Node *parent);
