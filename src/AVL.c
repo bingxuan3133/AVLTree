@@ -87,12 +87,19 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
 
 Node *avlGetReplacer(Node **ptrToRoot) {
 	Node *replacer;
-	
-	if ((*ptrToRoot)->rightChild != NULL) { // Keep on going
+	int balanceBefore;
   
+	if((*ptrToRoot)->rightChild != NULL) { // Keep on going
+    balanceBefore = (*ptrToRoot)->rightChild->balance;
+    
 		replacer = avlGetReplacer(&(*ptrToRoot)->rightChild);
-    if(&(*ptrToRoot)->rightChild == NULL);
+    
+		if((*ptrToRoot)->rightChild == NULL) {
       (*ptrToRoot)->balance--;
+    } else {
+      if(balanceBefore != 0 && (*ptrToRoot)->rightChild->balance == 0) // did the depth of rightChild changed?
+        (*ptrToRoot)->balance--;
+    }
     
 	} else { // Found re-placer
   
@@ -102,8 +109,8 @@ Node *avlGetReplacer(Node **ptrToRoot) {
 		} else {
 			*ptrToRoot = NULL;
     }
-    
   }
+  
   replacer->leftChild = NULL;
   replacer->rightChild = NULL;
   replacer->balance = 0;
@@ -128,18 +135,3 @@ Node *avlGetReplacer(Node **ptrToRoot) {
   
 	return replacer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

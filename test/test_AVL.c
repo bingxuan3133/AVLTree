@@ -598,9 +598,9 @@ void test_avlAdd_1_50_100_75_150_200_120_110_130_250_140() {
 	// TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node50);
 // }
 
-// avlGetReplacer
-// ==============
-
+/////////////////////////////////////////////////
+// Test avlGetReplacer
+/////////////////////////////////////////////////
 /*
  *		1 (Replacing node)
  */
@@ -714,6 +714,37 @@ void test_avlGetReplacer_case_5() {
 }
 
 /*
+ *      50             50
+ *     /  \     =>    /  \
+ *   25   200       25   200
+ *        / \            /
+ *      150 220        150
+ * 
+ * where 220 is being removed
+ */
+void test_avlGetReplacer_case_new() {
+	Node Node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node220 = {.data=220, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node25 = {.data=25, .balance=0, .leftChild=NULL, .rightChild=NULL};
+	Node Node200 = {.data=200, .balance=0, .leftChild=&Node150, .rightChild=&Node220};
+	Node Node50 = {.data=50, .balance=1, .leftChild=&Node25, .rightChild=&Node200};
+	
+	Node *root = &Node50;
+	Node *replacerNode;
+	
+	replacerNode = avlGetReplacer(&root);
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(replacerNode);
+	TEST_ASSERT_EQUAL_PTR(&Node50, root);
+	TEST_ASSERT_EQUAL_PTR(&Node220, replacerNode);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node200, 1, &Node50);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node25);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node150, NULL, -1, &Node200);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
+}
+
+/*
  *			50
  *     /  \
  *		10	100
@@ -813,4 +844,159 @@ void test_avlGetReplacer_case_8() {
   TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node1);
 	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node50);
 	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node100);
+}
+
+/*
+ *        100                  100                50
+ *      /    \               /    \             /    \
+ *     25    150           25     150         25     100
+ *    /  \     \    =>    /  \          =>   /  \    /  \
+ *   1   50    200       1   50             1   40  75  150
+ *      /  \                /  \
+ *     40  75              40  75
+ *
+ * where 200 is being removed
+ */
+void test_avlGetReplacer_case_9() {
+  Node Node40 = {.data=40, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node75 = {.data=75, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node50 = {.data=50, .balance=0, .leftChild=&Node40, .rightChild=&Node75};
+  Node Node200 = {.data=200, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node25 = {.data=25, .balance=1, .leftChild=&Node1, .rightChild=&Node50};
+  Node Node150 = {.data=150, .balance=1, .leftChild=NULL, .rightChild=&Node200};
+	Node Node100 = {.data=100, .balance=-1, .leftChild=&Node25, .rightChild=&Node150};
+	
+	Node *root = &Node100;
+	Node *replacerNode;
+	
+	replacerNode = avlGetReplacer(&root);
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(replacerNode);
+	TEST_ASSERT_EQUAL_PTR(&Node50, root);
+	TEST_ASSERT_EQUAL_PTR(&Node200, replacerNode);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node100, 0, &Node50);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node1, &Node40, 0, &Node25);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node75, &Node150, 0, &Node100);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node1);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node40);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node75);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
+}
+
+/*
+ *        100                  100                50
+ *      /    \               /    \             /    \
+ *     25    150           25     150         25     100
+ *    /  \     \    =>    /  \          =>   /       /  \
+ *   1   50    200       1   50             1      75  150
+ *         \                   \
+ *         75                  75
+ *
+ * where 200 is being removed
+ */
+void test_avlGetReplacer_case_10() {
+  Node Node75 = {.data=75, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node50 = {.data=50, .balance=1, .leftChild=NULL, .rightChild=&Node75};
+  Node Node200 = {.data=200, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node25 = {.data=25, .balance=1, .leftChild=&Node1, .rightChild=&Node50};
+  Node Node150 = {.data=150, .balance=1, .leftChild=NULL, .rightChild=&Node200};
+	Node Node100 = {.data=100, .balance=-1, .leftChild=&Node25, .rightChild=&Node150};
+	
+	Node *root = &Node100;
+	Node *replacerNode;
+	
+	replacerNode = avlGetReplacer(&root);
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(replacerNode);
+	TEST_ASSERT_EQUAL_PTR(&Node50, root);
+	TEST_ASSERT_EQUAL_PTR(&Node200, replacerNode);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node100, 0, &Node50);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node1, NULL, -1, &Node25);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node75, &Node150, 0, &Node100);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node1);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node75);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
+}
+
+/*
+ *        100                  100                50
+ *      /    \               /    \             /    \
+ *     25    150           25     150         25     100
+ *    /  \     \    =>    /  \          =>   /  \       \
+ *   1   50    200       1   50             1   40      150
+ *      /                   /
+ *     40                  40
+ *
+ * where 200 is being removed
+ */
+void test_avlGetReplacer_case_11() {
+  Node Node40 = {.data=40, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node50 = {.data=50, .balance=-1, .leftChild=&Node40, .rightChild=NULL};
+  Node Node200 = {.data=200, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node25 = {.data=25, .balance=1, .leftChild=&Node1, .rightChild=&Node50};
+  Node Node150 = {.data=150, .balance=1, .leftChild=NULL, .rightChild=&Node200};
+	Node Node100 = {.data=100, .balance=-1, .leftChild=&Node25, .rightChild=&Node150};
+	
+	Node *root = &Node100;
+	Node *replacerNode;
+	
+	replacerNode = avlGetReplacer(&root);
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(replacerNode);
+	TEST_ASSERT_EQUAL_PTR(&Node50, root);
+	TEST_ASSERT_EQUAL_PTR(&Node200, replacerNode);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node100, 0, &Node50);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node1, &Node40, 0, &Node25);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, &Node150, 1, &Node100);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node1);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node40);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
+}
+
+/*
+ *        100                  100                40
+ *      /    \               /    \             /    \
+ *     40    150           40     150         25     100
+ *    /  \     \    =>    /  \          =>   /       /  \
+ *   25  75   200        25  75             1      75   150
+ *  /    /              /    /                    /
+ * 1    50             1    50                  50
+ *
+ * where 200 is being removed
+ */
+void test_avlGetReplacer_case_12() {
+  Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node50 = {.data=50, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node25 = {.data=25, .balance=-1, .leftChild=&Node1, .rightChild=NULL};
+  Node Node75 = {.data=75, .balance=-1, .leftChild=&Node50, .rightChild=NULL};
+  Node Node200 = {.data=200, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node40 = {.data=40, .balance=0, .leftChild=&Node25, .rightChild=&Node75};
+  Node Node150 = {.data=150, .balance=1, .leftChild=NULL, .rightChild=&Node200};
+	Node Node100 = {.data=100, .balance=-1, .leftChild=&Node40, .rightChild=&Node150};
+	
+	Node *root = &Node100;
+	Node *replacerNode;
+	
+	replacerNode = avlGetReplacer(&root);
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(replacerNode);
+  
+  TEST_ASSERT_EQUAL(40, root->data);
+  
+	TEST_ASSERT_EQUAL_PTR(&Node40, root);
+	TEST_ASSERT_EQUAL_PTR(&Node200, replacerNode);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node100, 1, &Node40);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node1, NULL, -1, &Node25);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node75, &Node150, -1, &Node100);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node1);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node50, NULL, -1, &Node75);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
+  TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node50);
 }
