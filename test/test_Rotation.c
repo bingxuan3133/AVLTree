@@ -418,7 +418,7 @@ void test_rightRotate_given_balance_of_parent_and_rightChild_is_pos1_and_pos1_sh
  *			/								/  	  / \
  *		  60							  60	120	200
  */
-void xtest_rightRotate_given_balance_of_parent_and_rightChild_is_pos1_and_neg1_should_get_0_and_neg2() {
+void test_rightRotate_given_balance_of_parent_and_rightChild_is_neg1_and_pos1_should_get_pos2_and_0() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node60 = {.data=60, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node75 = {.data=75, .balance=-1, .leftChild=&Node60, .rightChild=NULL};
@@ -438,7 +438,7 @@ void xtest_rightRotate_given_balance_of_parent_and_rightChild_is_pos1_and_neg1_s
 	TEST_ASSERT_EQUAL_PTR(&Node150, root->rightChild->rightChild);
 	TEST_ASSERT_EQUAL_PTR(&Node60, root->rightChild->leftChild->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node120, root->rightChild->rightChild->leftChild);
-	TEST_ASSERT_EQUAL_PTR(&Node200, root->leftChild->rightChild->rightChild);
+	TEST_ASSERT_EQUAL_PTR(&Node200, root->rightChild->rightChild->rightChild);
 	
 	TEST_ASSERT_NULL(Node1.leftChild);
 	TEST_ASSERT_NULL(Node1.rightChild);
@@ -470,7 +470,7 @@ void xtest_rightRotate_given_balance_of_parent_and_rightChild_is_pos1_and_neg1_s
  *		  	/
  *		  (2)
  */
-void xtest_doubleLeftRotate_given_3_elements_should_rotate_to_balance_tree() {
+void test_doubleLeftRotate_given_3_elements_should_rotate_to_balance_tree() {
 	Node Node2 = {.data=2, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node3 = {.data=3, .balance=-1, .leftChild=&Node2, .rightChild=NULL};
 	Node Node1 = {.data=1, .balance=2, .leftChild=NULL, .rightChild=&Node3};
