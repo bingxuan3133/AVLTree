@@ -22,7 +22,7 @@ void tearDown(void)
 void test_getHeight_should_return_1_when_length_of_the_tree_is_1() {
 	NodeInt node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	
-	int result = getHeight(&node1);
+	int result = getHeight((Node *)&node1);
 	
 	TEST_ASSERT_EQUAL(1, result);
 }
@@ -39,9 +39,9 @@ void test_getHeight_should_get_the_longest_path_of_a_tree() {
 	NodeInt node2 = {.data=2, .balance=1, .leftChild=NULL, .rightChild=&node3};
 	NodeInt node1 = {.data=1, .balance=2, .leftChild=NULL, .rightChild=&node2};
 	
-	_getHeight_ExpectAndReturn(&node2, 2);
+	_getHeight_ExpectAndReturn((Node *)&node2, 2);
 	
-	int result = getHeight(&node1);
+	int result = getHeight((Node *)&node1);
 	
 	TEST_ASSERT_EQUAL(3, result);
 }
@@ -59,10 +59,10 @@ void test_getHeight_should_return_3_when_the_longest_path_of_the_tree_is_3() {
 	NodeInt node2 = {.data=2, .balance=-1, .leftChild=&node1, .rightChild=NULL};
 	NodeInt node3 = {.data=3, .balance=-1, .leftChild=&node2, .rightChild=&node4};
 	
-	_getHeight_ExpectAndReturn(&node2, 2);
-	_getHeight_ExpectAndReturn(&node4, 1);
+	_getHeight_ExpectAndReturn((Node *)&node2, 2);
+	_getHeight_ExpectAndReturn((Node *)&node4, 1);
 	
-	int result = getHeight(&node3);
+	int result = getHeight((Node *)&node3);
 	
 	TEST_ASSERT_EQUAL(3, result);
 }
@@ -86,7 +86,7 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_0_should
 	
 	NodeInt *root;
 	
-	root = leftRotate(&node1);
+	root = (NodeInt *) leftRotate((Node *)&node1);
 	TEST_ASSERT_EQUAL_PTR(&node2, root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
 	TEST_ASSERT_NULL(root->leftChild->leftChild);
@@ -111,7 +111,7 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos2_and_pos1_sho
 	
 	NodeInt *root;
 	
-	root = leftRotate(&node1);
+	root = (NodeInt *) leftRotate((Node *)&node1);
 	TEST_ASSERT_EQUAL_PTR(&node2, root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
@@ -144,7 +144,7 @@ void test_leftRotate_6_elements_given_balance_of_parent_and_rightChild_is_pos2_a
 
 	NodeInt *root;
 	
-	root = leftRotate(&node50);
+	root = (NodeInt *) leftRotate((Node *)&node50);
 	TEST_ASSERT_EQUAL_PTR(&node100, root);
 	TEST_ASSERT_EQUAL_PTR(&node50, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node150, root->rightChild);
@@ -188,7 +188,7 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_pos1_sho
 	
 	NodeInt *root;
 	
-	root = leftRotate(&node100);
+	root = (NodeInt *) leftRotate((Node *)&node100);
 	TEST_ASSERT_EQUAL_PTR(&node150, root);
 	TEST_ASSERT_EQUAL_PTR(&node100, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node200, root->rightChild);
@@ -239,7 +239,7 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_neg1_sho
 	
 	NodeInt *root;
 	
-	root = leftRotate(&node100);
+	root = (NodeInt *) leftRotate((Node *)&node100);
 	TEST_ASSERT_EQUAL_PTR(&node150, root);
 	TEST_ASSERT_EQUAL_PTR(&node100, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node200, root->rightChild);
@@ -287,7 +287,7 @@ void test_rightRotate_given_balance_of_parent_and_rightChild_is_neg1_and_0_shoul
 	
 	NodeInt *root;
 	
-	root = rightRotate(&node2);
+	root = (NodeInt *) rightRotate((Node *)&node2);
 	TEST_ASSERT_EQUAL_PTR(&node1, root);
 	TEST_ASSERT_EQUAL_PTR(&node2, root->rightChild);
 	TEST_ASSERT_NULL(root->leftChild);
@@ -312,7 +312,7 @@ void test_rightRotate_given_balance_of_parent_and_leftChild_is_neg2_and_neg1_sho
 	
 	NodeInt *root;
 	
-	root = rightRotate(&node3);
+	root = (NodeInt *) rightRotate((Node *)&node3);
 	TEST_ASSERT_EQUAL_PTR(&node2, root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
@@ -345,7 +345,7 @@ void test_rightRotate_6_elements_given_balance_of_parent_and_leftChild_is_neg2_a
 
 	NodeInt *root;
 	
-	root = rightRotate(&node50);
+	root = (NodeInt *) rightRotate((Node *)&node50);
 	TEST_ASSERT_EQUAL_PTR(&node10, root);
 	TEST_ASSERT_EQUAL_PTR(&node5, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node50, root->rightChild);
@@ -390,7 +390,7 @@ void test_rightRotate_given_balance_of_parent_and_leftChild_is_neg1_and_neg1_sho
 	
 	NodeInt *root;
 	
-	root = rightRotate(&node150);
+	root = (NodeInt *) rightRotate((Node *)&node150);
 	TEST_ASSERT_EQUAL_PTR(&node100, root);
 	TEST_ASSERT_EQUAL_PTR(&node50, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node150, root->rightChild);
@@ -441,7 +441,7 @@ void test_rightRotate_given_balance_of_parent_and_leftChild_is_neg1_and_pos1_sho
 	
 	NodeInt *root;
 	
-	root = rightRotate(&node100);
+	root = (NodeInt *) rightRotate((Node *)&node100);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node100, root->rightChild);
@@ -492,7 +492,7 @@ void test_doubleLeftRotate_given_3_elements_should_rotate_to_balance_tree() {
 	
 	NodeInt *root;
 	
-	root = doubleLeftRotate(&node1);
+	root = (NodeInt *) doubleLeftRotate((Node *)&node1);
 	TEST_ASSERT_EQUAL_PTR(&node2, root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
@@ -526,7 +526,7 @@ void test_doubleRightRotate_given_3_elements_should_rotate_to_balance_tree() {
 	
 	NodeInt *root;
 	
-	root = doubleRightRotate(&node3);
+	root = (NodeInt *) doubleRightRotate((Node *)&node3);
 	TEST_ASSERT_EQUAL_PTR(&node2, root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node3, root->rightChild);
@@ -559,7 +559,7 @@ void test_doubleRightRotate_given_6_elements_should_rotate_to_balance_tree() {
 
 	NodeInt *root;
 	
-	root = doubleRightRotate(&node50);
+	root = (NodeInt *) doubleRightRotate((Node *)&node50);
 	TEST_ASSERT_EQUAL_PTR(&node30, root);
 	TEST_ASSERT_EQUAL_PTR(&node10, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&node50, root->rightChild);

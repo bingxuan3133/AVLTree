@@ -36,7 +36,7 @@ void test_avlAddInt_focus_on_balance_factor_while_tree_height_remains_case_1() {
 	
 	NodeInt *root = &node100;
 	
-	root = avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node200);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node100, root);
@@ -70,7 +70,7 @@ void test_avlAddInt_focus_on_balance_factor_while_tree_height_remains_case_2() {
 	
 	NodeInt *root = &node100;
 	
-	root = avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node120);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node100, root);
@@ -99,7 +99,7 @@ void test_avlAddInt_focus_on_balance_factor_while_tree_height_changes_case_1() {
 	
 	NodeInt *root = &node1;
 	
-	root = avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node50);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, &node50, 1, &node1);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node50);
@@ -122,7 +122,7 @@ void test_avlAddInt_focus_on_balance_factor_while_tree_height_changes_case_2() {
 	
 	NodeInt *root = &node100;
 	
-	root = avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node120);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 1, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(&node120, NULL, -1, &node150);
@@ -147,7 +147,7 @@ void test_avlAddInt_focus_on_balance_factor_while_tree_height_changes_case_3() {
 	
 	NodeInt *root = &node100;
 	
-	root = avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node200);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 1, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, &node200, 1, &node150);
@@ -162,7 +162,7 @@ void test_avlAddInt_1() {
 	NodeInt node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node1);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root);
@@ -182,8 +182,8 @@ void test_avlAddInt_1_50() {
 	NodeInt node50 = {.data=50, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node1, root);
@@ -209,9 +209,9 @@ void test_avlAddInt_1_50_100() {
 	NodeInt node100 = {.data=100, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
@@ -241,10 +241,10 @@ void test_avlAddInt_1_50_100_75() {
 	NodeInt node75 = {.data=75, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
@@ -278,11 +278,11 @@ void test_avlAddInt_1_50_100_75_150() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
@@ -322,12 +322,12 @@ void test_avlAddInt_1_50_100_75_150_200() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
-	root = avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node200);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 0, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node75, 0, &node50);
@@ -356,13 +356,13 @@ void test_avlAddInt_1_50_100_75_150_200_120() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
-	root = avlAddInt(root, &node200);
-	root = avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node120);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 0, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node75, 0, &node50);
@@ -393,14 +393,14 @@ void test_avlAddInt_1_50_100_75_150_200_120_110() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
-	root = avlAddInt(root, &node200);
-	root = avlAddInt(root, &node120);
-	root = avlAddInt(root, &node110);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node110);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 1, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node75, 0, &node50);
@@ -433,15 +433,15 @@ void test_avlAddInt_1_50_100_75_150_200_120_110_130() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
-	root = avlAddInt(root, &node200);
-	root = avlAddInt(root, &node120);
-	root = avlAddInt(root, &node110);
-	root = avlAddInt(root, &node130);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node110);
+	root = (NodeInt *) avlAddInt(root, &node130);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 1, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node75, 0, &node50);
@@ -476,16 +476,16 @@ void test_avlAddInt_1_50_100_75_150_200_120_110_130_250() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
-	root = avlAddInt(root, &node200);
-	root = avlAddInt(root, &node120);
-	root = avlAddInt(root, &node110);
-	root = avlAddInt(root, &node130);
-	root = avlAddInt(root, &node250);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node110);
+	root = (NodeInt *) avlAddInt(root, &node130);
+	root = (NodeInt *) avlAddInt(root, &node250);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node150, 1, &node100);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node75, 0, &node50);
@@ -524,17 +524,17 @@ void test_avlAddInt_1_50_100_75_150_200_120_110_130_250_140() {
 	NodeInt node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	NodeInt *root = NULL;
 	
-	root = avlAddInt(root, &node1);
-	root = avlAddInt(root, &node50);
-	root = avlAddInt(root, &node100);
-	root = avlAddInt(root, &node75);
-	root = avlAddInt(root, &node150);
-	root = avlAddInt(root, &node200);
-	root = avlAddInt(root, &node120);
-	root = avlAddInt(root, &node110);
-	root = avlAddInt(root, &node130);
-	root = avlAddInt(root, &node250);
-	root = avlAddInt(root, &node140);
+	root = (NodeInt *) avlAddInt(root, &node1);
+	root = (NodeInt *) avlAddInt(root, &node50);
+	root = (NodeInt *) avlAddInt(root, &node100);
+	root = (NodeInt *) avlAddInt(root, &node75);
+	root = (NodeInt *) avlAddInt(root, &node150);
+	root = (NodeInt *) avlAddInt(root, &node200);
+	root = (NodeInt *) avlAddInt(root, &node120);
+	root = (NodeInt *) avlAddInt(root, &node110);
+	root = (NodeInt *) avlAddInt(root, &node130);
+	root = (NodeInt *) avlAddInt(root, &node250);
+	root = (NodeInt *) avlAddInt(root, &node140);
 	
 	TEST_ASSERT_EQUAL_AVL_Node(&node100, &node150, 0, &node120);
 	TEST_ASSERT_EQUAL_AVL_Node(&node50, &node110, -1, &node100);
@@ -563,12 +563,12 @@ void test_avlGetReplacer_case_1() {
 	NodeInt node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	
 	NodeInt *root = &node1;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node1);
 }
 
@@ -582,14 +582,14 @@ void test_avlGetReplacer_case_2() {
 	NodeInt node50 = {.data=50, .balance=-1, .leftChild=&node1, .rightChild=NULL};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node1, root);
-	TEST_ASSERT_EQUAL_PTR(&node50, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node50, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node1);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node50);
 }
@@ -604,14 +604,14 @@ void test_avlGetReplacer_case_3() {
 	NodeInt node1 = {.data=1, .balance=1, .leftChild=NULL, .rightChild=&node50};
 	
 	NodeInt *root = &node1;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node1, root);
-	TEST_ASSERT_EQUAL_PTR(&node50, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node50, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node1);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node50);
 }
@@ -627,14 +627,14 @@ void test_avlGetReplacer_case_4() {
 	NodeInt node50 = {.data=50, .balance=0, .leftChild=&node1, .rightChild=&node100};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node100, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node100, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, NULL, -1, &node50);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node1);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node100);
@@ -654,14 +654,14 @@ void test_avlGetReplacer_case_5() {
 	NodeInt node50 = {.data=50, .balance=1, .leftChild=&node1, .rightChild=&node100};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node100, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node100, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node75, 0, &node50);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node1);
   TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node75);
@@ -687,14 +687,14 @@ void test_avlGetReplacer_case_6() {
 	NodeInt node50 = {.data=50, .balance=1, .leftChild=&node10, .rightChild=&node100};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node200, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node200, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node10, &node100, 0, &node50);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, NULL, -1, &node10);
 	TEST_ASSERT_EQUAL_AVL_Node(&node75, &node150, 0, &node100);
@@ -724,14 +724,14 @@ void test_avlGetReplacer_case_7() {
 	NodeInt node50 = {.data=50, .balance=-1, .leftChild=&node10, .rightChild=&node100};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node30, root);
-	TEST_ASSERT_EQUAL_PTR(&node200, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node200, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node10, &node50, 0, &node30);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node20, 0, &node10);
 	TEST_ASSERT_EQUAL_AVL_Node(&node40, &node100, 0, &node50);
@@ -756,14 +756,14 @@ void test_avlGetReplacer_case_8() {
 	NodeInt node50 = {.data=50, .balance=-1, .leftChild=&node10, .rightChild=&node100};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node10, root);
-	TEST_ASSERT_EQUAL_PTR(&node100, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node100, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node1, &node50, 0, &node10);
   TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node1);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node50);
@@ -789,14 +789,14 @@ void test_avlGetReplacer_case_5b() {
 	NodeInt node50 = {.data=50, .balance=1, .leftChild=&node25, .rightChild=&node200};
 	
 	NodeInt *root = &node50;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node220, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node220, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node25, &node200, 1, &node50);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, NULL, 0, &node25);
   TEST_ASSERT_EQUAL_AVL_Node(&node150, NULL, -1, &node200);
@@ -825,14 +825,14 @@ void test_avlGetReplacer_case_9() {
 	NodeInt node100 = {.data=100, .balance=-1, .leftChild=&node25, .rightChild=&node150};
 	
 	NodeInt *root = &node100;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node200, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node200, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node25, &node100, 0, &node50);
   TEST_ASSERT_EQUAL_AVL_Node(&node1, &node40, 0, &node25);
 	TEST_ASSERT_EQUAL_AVL_Node(&node75, &node150, 0, &node100);
@@ -863,14 +863,14 @@ void test_avlGetReplacer_case_10() {
 	NodeInt node100 = {.data=100, .balance=-1, .leftChild=&node25, .rightChild=&node150};
 	
 	NodeInt *root = &node100;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node200, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node200, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node25, &node100, 0, &node50);
   TEST_ASSERT_EQUAL_AVL_Node(&node1, NULL, -1, &node25);
 	TEST_ASSERT_EQUAL_AVL_Node(&node75, &node150, 0, &node100);
@@ -900,14 +900,14 @@ void test_avlGetReplacer_case_11() {
 	NodeInt node100 = {.data=100, .balance=-1, .leftChild=&node25, .rightChild=&node150};
 	
 	NodeInt *root = &node100;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node50, root);
-	TEST_ASSERT_EQUAL_PTR(&node200, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node200, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node25, &node100, 0, &node50);
   TEST_ASSERT_EQUAL_AVL_Node(&node1, &node40, 0, &node25);
 	TEST_ASSERT_EQUAL_AVL_Node(NULL, &node150, 1, &node100);
@@ -938,14 +938,14 @@ void test_avlGetReplacer_case_12() {
 	NodeInt node100 = {.data=100, .balance=-1, .leftChild=&node40, .rightChild=&node150};
 	
 	NodeInt *root = &node100;
-	NodeInt *replacernode;
+	NodeInt *replacerNode;
 	
-	replacernode = avlGetReplacer(&root);
+	replacerNode = (NodeInt *) avlGetReplacer((Node **) &root);
 	
 	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacernode);
+	TEST_ASSERT_NOT_NULL(replacerNode);
 	TEST_ASSERT_EQUAL_PTR(&node40, root);
-	TEST_ASSERT_EQUAL_PTR(&node200, replacernode);
+	TEST_ASSERT_EQUAL_PTR(&node200, replacerNode);
 	TEST_ASSERT_EQUAL_AVL_Node(&node25, &node100, 1, &node40);
   TEST_ASSERT_EQUAL_AVL_Node(&node1, NULL, -1, &node25);
 	TEST_ASSERT_EQUAL_AVL_Node(&node75, &node150, -1, &node100);
@@ -970,7 +970,7 @@ void test_avlRemove_node1_from_1_element_AVL_tree() {
 	NodeInt *root = &node1;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
 	
 	TEST_ASSERT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -990,7 +990,7 @@ void test_avlRemove_node1_from_2_elements_AVL_tree() {
 	NodeInt *root = &node1;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1012,7 +1012,7 @@ void test_avlRemove_node50_from_2_elements_AVL_tree() {
 	NodeInt *root = &node1;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node50);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node50);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1039,7 +1039,7 @@ void test_avlRemove_for_left_subtree_case_1() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node50);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node50);
 	
 	TEST_ASSERT_NULL(root);
   TEST_ASSERT_NOT_NULL(removedNode);
@@ -1064,7 +1064,7 @@ void test_avlRemove_for_left_subtree_case_2() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NULL(removedNode); // node1 cannot be found in the tree
@@ -1090,7 +1090,7 @@ void test_avlRemove_for_left_subtree_case_3() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node25);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node25);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1118,7 +1118,7 @@ void test_avlRemove_for_left_subtree_case_4() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node25);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node25);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1148,7 +1148,7 @@ void test_avlRemove_for_left_subtree_case_5() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node25);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node25);
   
   // printf("=== THIS TEST ===\n"); 
   // printf("root:%d\n", root->data);
@@ -1199,7 +1199,7 @@ void test_avlRemove_for_left_subtree_case_6() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1236,7 +1236,7 @@ void test_avlRemove_for_left_subtree_case_7() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1272,7 +1272,7 @@ void test_avlRemove_for_left_subtree_case_8() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1309,7 +1309,7 @@ void test_avlRemove_for_left_subtree_case_9() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node1);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node1);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1341,7 +1341,7 @@ void test_avlRemove_for_left_subtree_case_10() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node25);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node25);
 	
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1371,7 +1371,7 @@ void test_avlRemove_for_left_subtree_case_11() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-	removedNode = avlRemoveInt(&root, &node25);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node25);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1406,7 +1406,7 @@ void test_avlRemove_for_left_subtree_case_12() {
 	NodeInt *root = &node150;
 	NodeInt *removedNode;
 
-  removedNode = avlRemoveInt(&root, &node150);
+  removedNode = (NodeInt *) avlRemoveInt(&root, &node150);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1443,7 +1443,7 @@ void test_avlRemove_for_left_subtree_case_13() {
 	NodeInt *root = &node150;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node150);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node150);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1481,7 +1481,7 @@ void test_avlRemove_for_right_subtree_case_1() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node200);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NULL(removedNode);
@@ -1507,7 +1507,7 @@ void test_avlRemove_for_right_subtree_case_2() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node150);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node150);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1535,7 +1535,7 @@ void test_avlRemove_for_right_subtree_case_3() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node150);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node150);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1565,7 +1565,7 @@ void test_avlRemove_for_right_subtree_case_4() {
 	NodeInt *root = &node50;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node150);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node150);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1601,7 +1601,7 @@ void test_avlRemove_for_right_subtree_case_5() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node200);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
 
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1638,7 +1638,7 @@ void test_avlRemove_for_right_subtree_case_6() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node200);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1674,7 +1674,7 @@ void test_avlRemove_for_right_subtree_case_7() {
 	NodeInt *root = &node100;
 	NodeInt *removedNode;
 
-	removedNode = avlRemoveInt(&root, &node200);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1711,7 +1711,7 @@ void test_avlRemove_for_right_subtree_case_8() {
   NodeInt *root = &node100;
   NodeInt *removedNode;  
   
-	removedNode = avlRemoveInt(&root, &node200);
+	removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
   
 	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1744,7 +1744,7 @@ void test_avlRemove_for_right_subtree_case_9() {
   NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-  removedNode = avlRemoveInt(&root,&node200);
+  removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
   
   TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1774,7 +1774,7 @@ void test_avlRemove_for_right_subtree_case_10() {
   NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-  removedNode = avlRemoveInt(&root,&node200);
+  removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
   
  	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1809,7 +1809,7 @@ void test_avlRemove_for_right_subtree_case_11() {
   NodeInt *root = &node50;
 	NodeInt *removedNode;
 	
-  removedNode = avlRemoveInt(&root,&node200);
+  removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
   
  	TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1847,7 +1847,7 @@ void test_avlRemove_for_right_subtree_case_12() {
   NodeInt *root = &node50;
 	NodeInt *removedNode;
   
-  removedNode = avlRemoveInt(&root,&node200);
+  removedNode = (NodeInt *) avlRemoveInt(&root, &node200);
 
   TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
@@ -1902,7 +1902,7 @@ void test_avlRemove_for_right_subtree_case_13() {
   NodeInt *root = &node175;
 	NodeInt *removedNode;
 	
-  removedNode = avlRemoveInt(&root,&node400);
+  removedNode = (NodeInt *) avlRemoveInt(&root, &node400);
   
   TEST_ASSERT_NOT_NULL(root);
 	TEST_ASSERT_NOT_NULL(removedNode);
