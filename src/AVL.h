@@ -4,7 +4,7 @@
 typedef struct Node Node;
 
 struct Node {
-	int rank;
+	int balance;
 	Node *leftChild;
 	Node *rightChild;
 	int data;
