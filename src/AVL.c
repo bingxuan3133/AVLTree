@@ -57,33 +57,111 @@ Node *avlAdd(Node *root, Node *nodeToAdd) {
 	return root;
 }
 
+
 Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
+  int balanceBefore;
+  Node *replacer;
+  
 	if(nodeToRemove == NULL) {
 		return NULL;
-	} else if(nodeToRemove->data == (*ptrToRoot)->data) {
-		
-		if((*ptrToRoot)->leftChild != NULL)
-			*ptrToRoot = avlGetReplacer(&(*ptrToRoot)->leftChild);
-		else if((*ptrToRoot)->rightChild != NULL)
-			*ptrToRoot = (*ptrToRoot)->rightChild;
-		else
-			*ptrToRoot = NULL;
-
-		return nodeToRemove;
 	} else {
-	
-		if(nodeToRemove->data < (*ptrToRoot)->data) {
-			avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove);
-		} else if(nodeToRemove->data > (*ptrToRoot)->data) {
-			avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove);
-		} else {
-			printf("error");
-		}
+    
+    if(*ptrToRoot == NULL) {
+      return NULL; // nodeToRemove cannot be found in the tree
+      
+    } else { // *ptrToRoot is not NULL
+      if(nodeToRemove->data == (*ptrToRoot)->data) { // Found nodeToRemove
+      
+        if((*ptrToRoot)->leftChild != NULL) { // 1st priority on leftChild
+        
+          printf("NODE%d\n", (*ptrToRoot)->data);
+          printf("BALANCE:%d\n", (*ptrToRoot)->balance);
+          
+          balanceBefore = (*ptrToRoot)->leftChild->balance;
+          replacer = avlGetReplacer(&(*ptrToRoot)->leftChild); // get re-placer
+          replacer->leftChild = (*ptrToRoot)->leftChild;
+          replacer->rightChild = (*ptrToRoot)->rightChild;
+          replacer->balance = (*ptrToRoot)->balance;
+          *ptrToRoot = replacer;
+
+          if((*ptrToRoot)->leftChild == NULL) // do re-placer has a leftChild?
+            (*ptrToRoot)->balance++;
+          
+          printf("NODE%d\n", (*ptrToRoot)->data);
+          printf("BALANCE:%d\n", (*ptrToRoot)->balance);
+          
+          if((*ptrToRoot)->leftChild != NULL) {
+            if(balanceBefore - (*ptrToRoot)->leftChild->balance != 0 && (*ptrToRoot)->leftChild->balance == 0) // did the depth of leftChild changed?
+              (*ptrToRoot)->balance++;
+          } 
+            
+        } else if((*ptrToRoot)->rightChild != NULL) { // 2nd priority on rightChild
+          *ptrToRoot = (*ptrToRoot)->rightChild;
+          
+        } else {
+          *ptrToRoot = NULL; // no leftChild and rightChild
+          
+        }
+        
+      } else if(nodeToRemove->data < (*ptrToRoot)->data) { // Go Left
+          if((*ptrToRoot)->leftChild != NULL)
+            balanceBefore = (*ptrToRoot)->leftChild->balance;
+          nodeToRemove = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove);
+          if((*ptrToRoot)->leftChild != NULL) {
+            if(balanceBefore - (*ptrToRoot)->leftChild->balance != 0 && (*ptrToRoot)->leftChild->balance == 0) // did the depth of leftChild changed?
+              (*ptrToRoot)->balance++;
+          } else {
+            if(nodeToRemove != NULL) {
+              (*ptrToRoot)->balance++;
+            }
+          }
+          
+      } else if(nodeToRemove->data > (*ptrToRoot)->data) { // Go Right
+          if((*ptrToRoot)->rightChild != NULL)
+            balanceBefore = (*ptrToRoot)->rightChild->balance;
+          nodeToRemove = avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove);
+          if((*ptrToRoot)->rightChild != NULL) {
+            if(balanceBefore - (*ptrToRoot)->rightChild->balance != 0 && (*ptrToRoot)->rightChild->balance == 0) // did the depth of rightChild changed?
+              (*ptrToRoot)->balance--;
+          } else {
+            if(nodeToRemove != NULL) {
+              (*ptrToRoot)->balance--;
+            }
+          }
+      }
+    }
 		
 	}
 	
+  if(nodeToRemove != NULL) {
+    nodeToRemove->leftChild = NULL;
+    nodeToRemove->rightChild = NULL;
+    nodeToRemove->balance = 0;
+  }
+  
+  	// Rotation
+  if((*ptrToRoot) != NULL) {
+    if((*ptrToRoot)->balance == 2) {
+        printf("it rotate left\n");
+      if((*ptrToRoot)->rightChild->balance >= 0 ) {
+        (*ptrToRoot) = leftRotate((*ptrToRoot));
+      } else {
+        (*ptrToRoot) = doubleLeftRotate((*ptrToRoot));
+      }
+      
+    } else if((*ptrToRoot)->balance == -2) {
+        printf("it rotate right\n");
+      if((*ptrToRoot)->leftChild->balance <= 0 ) {
+        (*ptrToRoot) = rightRotate((*ptrToRoot));
+      } else {
+        (*ptrToRoot) = doubleRightRotate((*ptrToRoot));
+      }
+    }
+  }
+  
 	return nodeToRemove;
 }
+
 
 Node *avlGetReplacer(Node **ptrToRoot) {
 	Node *replacer;
