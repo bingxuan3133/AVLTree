@@ -31,8 +31,11 @@ Node *leftRotate(Node *parent) {
 		parent->balance = -1;
 		parent->rightChild->balance = -1;		
 	} else if(parent->balance == +1 && parent->rightChild->balance == -1) {
-		parent->balance = -2;
-		parent->rightChild->balance = 0;
+		parent->balance = 0;
+		parent->rightChild->balance = -2;
+	} else if(parent->balance == +1 && parent->rightChild->balance == 0) {
+		parent->balance = 0;
+		parent->rightChild->balance = -1;
 	}
 	
 	newParent = parent->rightChild;
@@ -59,6 +62,9 @@ Node *rightRotate(Node *parent) {
 	} else if(parent->balance == -1 && parent->leftChild->balance == +1) {
 		parent->balance = +2;
 		parent->leftChild->balance = 0;
+	} else if(parent->balance == -1 && parent->leftChild->balance == 0) {
+		parent->balance = 0;
+		parent->leftChild->balance = +1;
 	}
 	
 	newParent = parent->leftChild;

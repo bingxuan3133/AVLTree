@@ -10,4 +10,6 @@ struct Node {
 	int data;
 };
 
+Node *avlAdd(Node *root, Node *noteToAdd);
+
 #endif // AVL_H
