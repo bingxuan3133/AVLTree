@@ -81,6 +81,10 @@ void test_leftRotate_given_3_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL_PTR(&Node2, root);
 	TEST_ASSERT_EQUAL_PTR(&Node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node3, root->rightChild);
+	TEST_ASSERT_NULL(root->leftChild->leftChild);
+	TEST_ASSERT_NULL(root->leftChild->rightChild);
+	TEST_ASSERT_NULL(root->rightChild->leftChild);
+	TEST_ASSERT_NULL(root->rightChild->rightChild);
 	
 	TEST_ASSERT_EQUAL(0, Node2.rank);
 	TEST_ASSERT_EQUAL(0, Node1.rank);
@@ -105,6 +109,10 @@ void test_rightRotate_given_3_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL_PTR(&Node2, root);
 	TEST_ASSERT_EQUAL_PTR(&Node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node3, root->rightChild);
+	TEST_ASSERT_NULL(root->leftChild->leftChild);
+	TEST_ASSERT_NULL(root->leftChild->rightChild);
+	TEST_ASSERT_NULL(root->rightChild->leftChild);
+	TEST_ASSERT_NULL(root->rightChild->rightChild);
 	
 	TEST_ASSERT_EQUAL(0, Node2.rank);
 	TEST_ASSERT_EQUAL(0, Node1.rank);
@@ -129,6 +137,10 @@ void test_doubleLeftRotate_given_3_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL_PTR(&Node2, root);
 	TEST_ASSERT_EQUAL_PTR(&Node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node3, root->rightChild);
+	TEST_ASSERT_NULL(root->leftChild->leftChild);
+	TEST_ASSERT_NULL(root->leftChild->rightChild);
+	TEST_ASSERT_NULL(root->rightChild->leftChild);
+	TEST_ASSERT_NULL(root->rightChild->rightChild);
 	
 	TEST_ASSERT_EQUAL(0, Node2.rank);
 	TEST_ASSERT_EQUAL(0, Node1.rank);
@@ -153,6 +165,10 @@ void test_doubleRightRotate_given_3_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL_PTR(&Node2, root);
 	TEST_ASSERT_EQUAL_PTR(&Node1, root->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node3, root->rightChild);
+	TEST_ASSERT_NULL(root->leftChild->leftChild);
+	TEST_ASSERT_NULL(root->leftChild->rightChild);
+	TEST_ASSERT_NULL(root->rightChild->leftChild);
+	TEST_ASSERT_NULL(root->rightChild->rightChild);
 	
 	TEST_ASSERT_EQUAL(0, Node2.rank);
 	TEST_ASSERT_EQUAL(0, Node1.rank);
@@ -221,6 +237,14 @@ void test_rightRotate_given_6_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL_PTR(&Node30, root->rightChild->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node100, root->rightChild->rightChild);
 	
+	TEST_ASSERT_NULL(Node5.rightChild);
+	TEST_ASSERT_NULL(Node1.leftChild);
+	TEST_ASSERT_NULL(Node1.rightChild);
+	TEST_ASSERT_NULL(Node30.leftChild);
+	TEST_ASSERT_NULL(Node30.rightChild);
+	TEST_ASSERT_NULL(Node100.leftChild);
+	TEST_ASSERT_NULL(Node100.rightChild);
+		
 	TEST_ASSERT_EQUAL(0, Node10.rank);
 	TEST_ASSERT_EQUAL(-1, Node5.rank);
 	TEST_ASSERT_EQUAL(0, Node50.rank);
@@ -255,6 +279,14 @@ void test_doubleRightRotate_given_6_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL_PTR(&Node5, root->leftChild->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node40, root->rightChild->leftChild);
 	TEST_ASSERT_EQUAL_PTR(&Node100, root->rightChild->rightChild);
+
+	TEST_ASSERT_NULL(Node10.rightChild);
+	TEST_ASSERT_NULL(Node5.leftChild);
+	TEST_ASSERT_NULL(Node5.rightChild);
+	TEST_ASSERT_NULL(Node40.leftChild);
+	TEST_ASSERT_NULL(Node40.rightChild);
+	TEST_ASSERT_NULL(Node100.leftChild);
+	TEST_ASSERT_NULL(Node100.rightChild);
 	
 	TEST_ASSERT_EQUAL(0, Node30.rank);
 	TEST_ASSERT_EQUAL(-1, Node10.rank);

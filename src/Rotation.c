@@ -23,7 +23,9 @@ int getHeight(Node *parent) {
 
 Node *leftRotate(Node *parent) {
 	Node *newParent = parent->rightChild;
-
+	
+	parent->rightChild = NULL;
+	
 	if(newParent->leftChild != NULL)
 		parent->rightChild = newParent->leftChild;
 	
@@ -38,6 +40,8 @@ Node *leftRotate(Node *parent) {
 Node *rightRotate(Node *parent) {
 	Node *newParent = parent->leftChild;
 	
+	parent->leftChild = NULL;
+	
 	if(newParent->rightChild != NULL)
 		parent->leftChild = newParent->rightChild;	
 		
@@ -50,25 +54,33 @@ Node *rightRotate(Node *parent) {
 }
 
 Node *doubleLeftRotate(Node *parent) {
-	Node *newParent = parent->rightChild->leftChild;
+	Node *temp = parent->rightChild->leftChild;
+	Node *newParent;
 	
-	newParent->leftChild = parent;
-	newParent->rightChild = parent->rightChild;
+	parent->rightChild->leftChild = NULL;
+	temp->rightChild = parent->rightChild;
+	parent->rightChild = temp;
+
+	parent->rightChild->rank += 1;
+	parent->rightChild->rightChild->rank += 1;
 	
-	newParent->leftChild->rank += -2;
-	newParent->rightChild->rank += 1;
+	newParent = leftRotate(parent);
 	
 	return newParent;
 }
 
 Node *doubleRightRotate(Node *parent) {
-	Node *newParent = parent->leftChild->rightChild;
+	Node *temp = parent->leftChild->rightChild;
+	Node *newParent;
 	
-	newParent->rightChild = parent;
-	newParent->leftChild = parent->leftChild;
+	parent->leftChild->rightChild = NULL;
+	temp->leftChild = parent->leftChild;
+	parent->leftChild = temp;
+
+	parent->leftChild->rank += -1;
+	parent->leftChild->leftChild->rank += -1;
 	
-	newParent->leftChild->rank += -1;
-	newParent->rightChild->rank += 2;
+	newParent = rightRotate(parent);
 	
 	return newParent;
 }
