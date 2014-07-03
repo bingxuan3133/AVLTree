@@ -2,22 +2,31 @@
 #include "AVL.h"
 #include <stdio.h>
 
+/*
+ * This function add a node into a BST (Balanced Search Tree)
+ * 
+ * input:
+ *  *root       root node of the BST that adding in new node
+ *  *nodeToAdd  new node to be added into the BST
+ * return:
+ *  *root       root node of the new BST
+ */
 Node *avlAdd(Node *root, Node *nodeToAdd) {
 	int balanceBefore;
 
 	if(root == NULL) { // Reach NULL
 		root = nodeToAdd;
 		root->balance = 0;
-	} else { // Compare
+	} else { // Comparison
 		if(nodeToAdd->data < root->data) { // Go to Left
 
 			if(root->leftChild == NULL) { // leftChild is empty
 				root->leftChild = avlAdd(root->leftChild, nodeToAdd);
 				root->balance--;
-			} else {
+			} else { // leftChild is not empty
 				balanceBefore = root->leftChild->balance;
 				root->leftChild = avlAdd(root->leftChild, nodeToAdd);
-				if(root->leftChild->balance - balanceBefore != 0 && root->leftChild->balance != 0) // did the depth of leftChild changed?
+				if(root->leftChild->balance - balanceBefore != 0 && root->leftChild->balance != 0) // Does the depth of left sub tree change?
 					root->balance--;
 			}
 			
@@ -26,19 +35,19 @@ Node *avlAdd(Node *root, Node *nodeToAdd) {
 			if(root->rightChild == NULL) { // rightChild is empty
 				root->rightChild = avlAdd(root->rightChild, nodeToAdd);
 				root->balance++;
-			} else {
+			} else { // rightChild is not empty
 				balanceBefore = root->rightChild->balance;
 				root->rightChild = avlAdd(root->rightChild, nodeToAdd);
-				if(root->rightChild->balance - balanceBefore != 0 && root->rightChild->balance != 0) // did the depth of rightChild changed?
+				if(root->rightChild->balance - balanceBefore != 0 && root->rightChild->balance != 0) // Does the depth of right sub tree change?
 					root->balance++;
 			}
 			
 		} else { // Equal
-			printf("error\n");
+			printf("error\n"); // Throw exception
 		}
 	}
 	
-	// Rotation
+	// Decide if should do rotation
 	if(root->balance == 2) {
 		if(root->rightChild->balance >= 0 ) {
 			root = leftRotate(root);
@@ -57,12 +66,21 @@ Node *avlAdd(Node *root, Node *nodeToAdd) {
 	return root;
 }
 
-
+/*
+ * This function remove a node from a BST (Balanced Search Tree)
+ * 
+ * input:
+ *  **ptrToRoot   pointer to the root node of BST that is removing a node
+ *  *nodeToRemove node to be removed from the BST
+ * return:
+ *  NULL          nodeToRemove cannot be found in the BST
+ *  nodeToRemove  node that has been removed successfully from the BST
+ */
 Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
   int balanceBefore;
   Node *replacer;
   
-	if(nodeToRemove == NULL) {
+	if(nodeToRemove == NULL) { // Removing a NULL
 		return NULL;
 	} else {
     
@@ -73,9 +91,6 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
       if(nodeToRemove->data == (*ptrToRoot)->data) { // Found nodeToRemove
       
         if((*ptrToRoot)->leftChild != NULL) { // 1st priority on leftChild
-        
-          printf("NODE%d\n", (*ptrToRoot)->data);
-          printf("BALANCE:%d\n", (*ptrToRoot)->balance);
           
           balanceBefore = (*ptrToRoot)->leftChild->balance;
           replacer = avlGetReplacer(&(*ptrToRoot)->leftChild); // get re-placer
@@ -86,12 +101,9 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
 
           if((*ptrToRoot)->leftChild == NULL) // do re-placer has a leftChild?
             (*ptrToRoot)->balance++;
-          
-          printf("NODE%d\n", (*ptrToRoot)->data);
-          printf("BALANCE:%d\n", (*ptrToRoot)->balance);
-          
+
           if((*ptrToRoot)->leftChild != NULL) {
-            if(balanceBefore - (*ptrToRoot)->leftChild->balance != 0 && (*ptrToRoot)->leftChild->balance == 0) // did the depth of leftChild changed?
+            if(balanceBefore != 0 && (*ptrToRoot)->leftChild->balance == 0) // Does the depth of left sub tree change?
               (*ptrToRoot)->balance++;
           } 
             
@@ -108,7 +120,7 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
             balanceBefore = (*ptrToRoot)->leftChild->balance;
           nodeToRemove = avlRemove(&(*ptrToRoot)->leftChild, nodeToRemove);
           if((*ptrToRoot)->leftChild != NULL) {
-            if(balanceBefore - (*ptrToRoot)->leftChild->balance != 0 && (*ptrToRoot)->leftChild->balance == 0) // did the depth of leftChild changed?
+            if(balanceBefore != 0 && (*ptrToRoot)->leftChild->balance == 0) // Does the depth of left sub tree change?
               (*ptrToRoot)->balance++;
           } else {
             if(nodeToRemove != NULL) {
@@ -121,7 +133,7 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
             balanceBefore = (*ptrToRoot)->rightChild->balance;
           nodeToRemove = avlRemove(&(*ptrToRoot)->rightChild, nodeToRemove);
           if((*ptrToRoot)->rightChild != NULL) {
-            if(balanceBefore - (*ptrToRoot)->rightChild->balance != 0 && (*ptrToRoot)->rightChild->balance == 0) // did the depth of rightChild changed?
+            if(balanceBefore != 0 && (*ptrToRoot)->rightChild->balance == 0) // Does the depth of right sub tree change?
               (*ptrToRoot)->balance--;
           } else {
             if(nodeToRemove != NULL) {
@@ -139,10 +151,9 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
     nodeToRemove->balance = 0;
   }
   
-  	// Rotation
+  	// Decide if should do rotation
   if((*ptrToRoot) != NULL) {
     if((*ptrToRoot)->balance == 2) {
-        printf("it rotate left\n");
       if((*ptrToRoot)->rightChild->balance >= 0 ) {
         (*ptrToRoot) = leftRotate((*ptrToRoot));
       } else {
@@ -150,7 +161,6 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
       }
       
     } else if((*ptrToRoot)->balance == -2) {
-        printf("it rotate right\n");
       if((*ptrToRoot)->leftChild->balance <= 0 ) {
         (*ptrToRoot) = rightRotate((*ptrToRoot));
       } else {
@@ -162,7 +172,14 @@ Node *avlRemove(Node **ptrToRoot, Node *nodeToRemove) {
 	return nodeToRemove;
 }
 
-
+/*
+ * This function helps avlRemove to find a node that is suitable to replace the removing node in the BST (Balanced Search Tree)
+ * 
+ * input:
+ *  **ptrToRoot   leftChild of the removing node
+ * return:
+ *  *replacer     replacer node that is suitable to replace the removing node in the BST
+ */
 Node *avlGetReplacer(Node **ptrToRoot) {
 	Node *replacer;
 	int balanceBefore;
@@ -172,17 +189,17 @@ Node *avlGetReplacer(Node **ptrToRoot) {
     
 		replacer = avlGetReplacer(&(*ptrToRoot)->rightChild);
     
-		if((*ptrToRoot)->rightChild == NULL) {
+		if((*ptrToRoot)->rightChild == NULL) { // rightChild is gone after recursion
       (*ptrToRoot)->balance--;
-    } else {
-      if(balanceBefore != 0 && (*ptrToRoot)->rightChild->balance == 0) // did the depth of rightChild changed?
+    } else { // rightChild remains after recursion
+      if(balanceBefore != 0 && (*ptrToRoot)->rightChild->balance == 0) // Does the depth of right sub tree change?
         (*ptrToRoot)->balance--;
     }
     
-	} else { // Found re-placer
-  
+	} else { // Replacer is found
 		replacer = *ptrToRoot;
-		if((*ptrToRoot)->leftChild != NULL) {
+    
+		if((*ptrToRoot)->leftChild != NULL) { // Replacer has a leftChild
 			*ptrToRoot = (*ptrToRoot)->leftChild;
 		} else {
 			*ptrToRoot = NULL;
@@ -193,7 +210,7 @@ Node *avlGetReplacer(Node **ptrToRoot) {
   replacer->rightChild = NULL;
   replacer->balance = 0;
 
-	// Rotation
+	// Decide if should do rotation
   if((*ptrToRoot) != NULL) {
     if((*ptrToRoot)->balance == 2) {
       if((*ptrToRoot)->rightChild->balance >= 0 ) {

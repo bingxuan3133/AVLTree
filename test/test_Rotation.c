@@ -11,8 +11,9 @@ void tearDown(void)
 {
 }
 
-
-// === GET HEIGHT TEST ===
+/////////////////////////////////////////////////
+// Test getHeight
+/////////////////////////////////////////////////
 
 /**
  *		(1)
@@ -29,8 +30,8 @@ void test_getHeight_should_return_1_when_length_of_the_tree_is_1() {
  *		(1)
  *		  \
  *		  (2)
- *			\
- *			(3)
+ *			  \
+ *			  (3)
  */
 void test_getHeight_should_get_the_longest_path_of_a_tree() {
 	Node Node3 = {.data=3, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -46,10 +47,10 @@ void test_getHeight_should_get_the_longest_path_of_a_tree() {
 
 /**
  *			(3)
- *			/ \
- *		 (2)  (4)
- *		 /
- *	  (1)
+ *      / \
+ *		(2) (4)
+ *    /
+ *	(1)
  */
 void test_getHeight_should_return_3_when_the_longest_path_of_the_tree_is_3() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -65,12 +66,18 @@ void test_getHeight_should_return_3_when_the_longest_path_of_the_tree_is_3() {
 	TEST_ASSERT_EQUAL(3, result);
 }
 
+
+// === ROTATION ===
+
 // === SINGLE LEFT ROTATION ===
+/////////////////////////////////////////////////
+// Test leftRotate
+/////////////////////////////////////////////////
 
 /**
- *		(1)			  (2)
- *		  \		=>	  /
- *		  (2)		(1)
+ *		(1)	+1		      (2) -1
+ *		  \		    =>    /
+ *		  (2)	0	      (1) 0
  */
 void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_0_should_get_0_and_neg1() {
 	Node Node2 = {.data=2, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -90,11 +97,11 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_0_should
 }
 
 /**
- *		(1)			  (2)
- *		  \			  / \
- *		  (2)	=>	(1)	(3)
- *			\
- *			(3)
+ *		(1) +2              (2) 0
+ *      \			            / \
+ *		  (2) +1    =>	0 (1)	(3) 0
+ *			  \
+ *			  (3) 0
  */
 void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos2_and_pos1_should_get_0_and_0() {
 	Node Node3 = {.data=3, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -118,13 +125,13 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos2_and_pos1_sho
 }
 
 /**
- *			(50)					  (100)
- *			/  \					  /	  \
- *		 (10) (100)				   (50)	 (150)
- *			  /	  \			=>	   /  \		\
- *		   (70)	 (150)			(10)  (70) (200)
- *				 	\
- *				   (200)
+ *			(50)  +2                  (100) 0
+ *			/  \					            /	  \
+ *   (10) (100) +1				   0 (50)  (150)
+ *			  /	  \			  =>       /  \		  \
+ *      (70)  (150)		  	  (10)  (70)  (200)
+ *			  \
+ *			 (200)
  */
 void test_leftRotate_6_elements_given_balance_of_parent_and_rightChild_is_pos2_and_pos1_should_get_0_and_0() {
 	Node Node200 = {.data=200, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -160,13 +167,13 @@ void test_leftRotate_6_elements_given_balance_of_parent_and_rightChild_is_pos2_a
 }
 
 /**
- *			   100							 150
- *			 /	   \						/	\
- *		  50		150					 100	200
- *		 /	\	   /   \		=>		/  \	/
- *		1	75  120		200			  50  120  180	
- *					   /			 /	\
- *					180				1	75
+ *			    100 +1                   150  -1
+ *			  /	    \                   /	  \
+ *		  50		  150 +1      -1  100     200
+ *		 /	\	   /  \		  =>     /  \	    /
+ *		1	  75 120  200			   50  120   180	
+ *                /         / \
+ *					    180			   1  75
  */
 void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_pos1_should_get_neg1_and_neg1() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -211,13 +218,13 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_pos1_sho
 }
 
 /**
- *			   100							 150
- *			 /	   \						/	\
- *		  50		150					 100	200
- *		 /	\	   /   \		=>		/	\
- *		1	75  120		200			  50	120
- *				   \				 /	\	  \	
- *					130				1	75	  130
+ *		      100	+1  				        150 -2
+ *			  /	   \                  /	    \
+ *		  50		 150  -1        0 100	    200
+ *     / \	  /   \		  =>     /	\
+ *		1  75  120  200         50  120
+ *				    \              /	\   \	
+ *            130           1   75  130
  */
 void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_neg1_should_get_0_and_neg2() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -264,11 +271,14 @@ void test_leftRotate_given_balance_of_parent_and_rightChild_is_pos1_and_neg1_sho
 
 
 // === SINGLE RIGHT ROTATION ===
+/////////////////////////////////////////////////
+// Test rightRotate
+/////////////////////////////////////////////////
 
 /**
- *		  (2)		(1)
- *		  /		=>	  \
- *		(1)			  (2)
+ *		  (2)	-1	      (1) +1
+ *		  /		    =>	    \
+ *		(1) 0             (2) 0
  */
 void test_rightRotate_given_balance_of_parent_and_rightChild_is_neg1_and_0_should_get_0_and_pos1() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -288,9 +298,9 @@ void test_rightRotate_given_balance_of_parent_and_rightChild_is_neg1_and_0_shoul
 }
 
 /**
- *			(3)		  (2)
- *		  	/	  	  / \
- *		  (2)	=>	(1)	(3)
+ *			  (3)	-2	          (2) 0
+ *		  	/                 / \
+ *		  (2)	-1     => 	0 (1)	(3)
  *		  /
  *		(1)
  */
@@ -316,11 +326,11 @@ void test_rightRotate_given_balance_of_parent_and_leftChild_is_neg2_and_neg1_sho
 }
 
 /**
- *			(50)				  (10)
- *			/  \				 /	 \
- *		 (10) (100)			   (5)	(50)
- *		 /	\	  		=>	   /	/  \
- *	   (5)  (30)			 (1) (30) (100)
+ *			      (50) -2 			        (10)  0
+ *			     /    \				          /  \
+ *      -1 (10) (100)	            (5) (50)  0
+ *        /   \           =>      /   /   \
+ *      (5)  (30)			          (1) (30) (100)
  *	   /
  *	 (1)
  */
@@ -359,15 +369,15 @@ void test_rightRotate_6_elements_given_balance_of_parent_and_leftChild_is_neg2_a
 }
 
 /**
- *				 150				 100
- * 			    /	\				/	\
- *			 100	200			  50	 150
- *			/  \	/		=>	 / \	/  	\
- *		  50  120 180			1  75 120	200
- *		 /	\								/
- *		1	75							 180
+ *				    150 -1               100  +1
+ *          /	    \               /   \
+ *    -1  100     200            50	  150 +1
+ *       /  \	    /      =>     / \    / \
+ *      50  120 180			       1  75 120	200
+ *     / \								                /
+ *    1   75                           180
  */
-void test_rightRotate_given_balance_of_parent_and_rightChild_is_pos1_and_pos1_should_get_neg1_and_neg1() {
+void test_rightRotate_given_balance_of_parent_and_leftChild_is_neg1_and_neg1_should_get_pos1_and_pos1() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node75 = {.data=75, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node50 = {.data=50, .balance=0, .leftChild=&Node1, .rightChild=&Node75};
@@ -410,15 +420,15 @@ void test_rightRotate_given_balance_of_parent_and_rightChild_is_pos1_and_pos1_sh
 }
 
 /**
- *			   100							 50
- *			 /	   \						/	\
- *		  50		150					   1	100
- *		 /	\	   /   \		=>			   /  \
- *		1	75  120		200					 75	  150
- *			/								/  	  / \
- *		  60							  60	120	200
+ *          100  -1               50  +2
+ *			 /	    \                 / \
+ *  +1  50		  150              1  100 0
+ *     /  \	    /   \		  =>        /  \
+ *		1	  75  120		200           75  150
+ *			  /								        /   / \
+ *		  60                      60	120	200
  */
-void test_rightRotate_given_balance_of_parent_and_rightChild_is_neg1_and_pos1_should_get_pos2_and_0() {
+void test_rightRotate_given_balance_of_parent_and_leftChild_is_neg1_and_pos1_should_get_pos2_and_0() {
 	Node Node1 = {.data=1, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node60 = {.data=60, .balance=0, .leftChild=NULL, .rightChild=NULL};
 	Node Node75 = {.data=75, .balance=-1, .leftChild=&Node60, .rightChild=NULL};
@@ -461,14 +471,18 @@ void test_rightRotate_given_balance_of_parent_and_rightChild_is_neg1_and_pos1_sh
 	TEST_ASSERT_EQUAL(0, Node200.balance);
 }
 
+
 // === DOUBLE LEFT ROTATION ===
+/////////////////////////////////////////////////
+// Test doubleLeftRotate
+/////////////////////////////////////////////////
 
 /**
- *		  (1)	  	  (2)
- *		  	\		  / \
- *			(3)	=>	(1)	(3)
- *		  	/
- *		  (2)
+ *    (1)           (2)
+ *      \		        / \
+ *      (3)	  =>	(1)	(3)
+ *      /
+ *    (2)
  */
 void test_doubleLeftRotate_given_3_elements_should_rotate_to_balance_tree() {
 	Node Node2 = {.data=2, .balance=0, .leftChild=NULL, .rightChild=NULL};
@@ -491,11 +505,15 @@ void test_doubleLeftRotate_given_3_elements_should_rotate_to_balance_tree() {
 	TEST_ASSERT_EQUAL(0, Node3.balance);
 }
 
+
 // === DOUBLE RIGHT ROTATION ===
+/////////////////////////////////////////////////
+// Test doubleRightRotate
+/////////////////////////////////////////////////
 
 /**
- *		  (3)		  (2)
- *		  /			  / \
+ *		  (3)		    (2)
+ *		  /			    / \
  *		(1)		=>	(1)	(3)
  *		  \
  *		  (2)
@@ -522,13 +540,13 @@ void test_doubleRightRotate_given_3_elements_should_rotate_to_balance_tree() {
 }
 
 /**
- *			(50)				  (30)
- *			/  \				  /	 \
- *		 (10) (100)			   (10)	(50)
- *		 /	\	  		=>	   /	/  \
- *	   (5)  (30)			 (5) (40) (100)
- *			   \
- *			  (40)
+ *			  (50)				     (30)
+ *			  /  \				    /   \
+ *		 (10) (100)       (10)	(50)
+ *		 /	\	  		=>    /	    /  \
+ *    (5) (30)        (5)  (40)  (100)
+ *          \
+ *          (40)
  */
 void test_doubleRightRotate_given_6_elements_should_rotate_to_balance_tree() {
 	Node Node40 = {.data=40, .balance=0, .leftChild=NULL, .rightChild=NULL};

@@ -12,6 +12,7 @@ void tearDown(void)
 {
 }
 
+
 /////////////////////////////////////////////////
 // Test avlAdd
 /////////////////////////////////////////////////
@@ -551,6 +552,9 @@ void test_avlAdd_1_50_100_75_150_200_120_110_130_250_140() {
 /////////////////////////////////////////////////
 // Test avlGetReplacer
 /////////////////////////////////////////////////
+
+// My own test cases
+
 /*
  *		1 (Replacing node)
  */
@@ -664,37 +668,6 @@ void test_avlGetReplacer_case_5() {
 }
 
 /*
- *      50             50
- *     /  \     =>    /  \
- *   25   200       25   200
- *        / \            /
- *      150 220        150
- * 
- * where 220 is being removed
- */
-void test_avlGetReplacer_case_new() {
-	Node Node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
-  Node Node220 = {.data=220, .balance=0, .leftChild=NULL, .rightChild=NULL};
-  Node Node25 = {.data=25, .balance=0, .leftChild=NULL, .rightChild=NULL};
-	Node Node200 = {.data=200, .balance=0, .leftChild=&Node150, .rightChild=&Node220};
-	Node Node50 = {.data=50, .balance=1, .leftChild=&Node25, .rightChild=&Node200};
-	
-	Node *root = &Node50;
-	Node *replacerNode;
-	
-	replacerNode = avlGetReplacer(&root);
-	
-	TEST_ASSERT_NOT_NULL(root);
-	TEST_ASSERT_NOT_NULL(replacerNode);
-	TEST_ASSERT_EQUAL_PTR(&Node50, root);
-	TEST_ASSERT_EQUAL_PTR(&Node220, replacerNode);
-	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node200, 1, &Node50);
-	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node25);
-  TEST_ASSERT_EQUAL_AVL_NODE(&Node150, NULL, -1, &Node200);
-	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
-}
-
-/*
  *			50
  *     /  \
  *		10	100
@@ -794,6 +767,39 @@ void test_avlGetReplacer_case_8() {
   TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node1);
 	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node50);
 	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node100);
+}
+
+
+// Email requirements test cases
+/*
+ *      50             50
+ *     /  \     =>    /  \
+ *   25   200       25   200
+ *        / \            /
+ *      150 220        150
+ * 
+ * where 220 is being removed
+ */
+void test_avlGetReplacer_case_5b() {
+	Node Node150 = {.data=150, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node220 = {.data=220, .balance=0, .leftChild=NULL, .rightChild=NULL};
+  Node Node25 = {.data=25, .balance=0, .leftChild=NULL, .rightChild=NULL};
+	Node Node200 = {.data=200, .balance=0, .leftChild=&Node150, .rightChild=&Node220};
+	Node Node50 = {.data=50, .balance=1, .leftChild=&Node25, .rightChild=&Node200};
+	
+	Node *root = &Node50;
+	Node *replacerNode;
+	
+	replacerNode = avlGetReplacer(&root);
+	
+	TEST_ASSERT_NOT_NULL(root);
+	TEST_ASSERT_NOT_NULL(replacerNode);
+	TEST_ASSERT_EQUAL_PTR(&Node50, root);
+	TEST_ASSERT_EQUAL_PTR(&Node220, replacerNode);
+	TEST_ASSERT_EQUAL_AVL_NODE(&Node25, &Node200, 1, &Node50);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node25);
+  TEST_ASSERT_EQUAL_AVL_NODE(&Node150, NULL, -1, &Node200);
+	TEST_ASSERT_EQUAL_AVL_NODE(NULL, NULL, 0, &Node150);
 }
 
 /*
@@ -950,8 +956,10 @@ void test_avlGetReplacer_case_12() {
 
 
 /////////////////////////////////////////////////
-// Some tests on avlRemove
+// Test avlRemove
 /////////////////////////////////////////////////
+
+// My own test cases
 
 /*
  *    1 (Node to remove)
@@ -1014,9 +1022,7 @@ void test_avlRemove_Node50_from_2_elements_AVL_tree() {
 }
 
 
-/////////////////////////////////////////////////
-// Test avlGetReplacer
-/////////////////////////////////////////////////
+// Email requirements test cases
 
 ////////////////////////////////////////////////////////////
 // Test avlRemove() on deletion of node on the left subtree
